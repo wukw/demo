@@ -11,6 +11,7 @@
     <modules>
         <module>consul</module>
         <module>spring-consul</module>
+        <module>crawler-analysis</module>
     </modules>
 
 
