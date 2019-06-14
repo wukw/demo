@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://www.w3schools.com"
+           xmlns="http://www.w3schools.com"
+           elementFormDefault="qualified">
+
+
+    <xs:element name="HttpPages">
+        <xs:complexType>
+            <xs:group ref="HttpPages"></xs:group>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:group name="HttpPages">
+        <xs:sequence>
+            <xs:element ref="HttpPage"></xs:element>
+        </xs:sequence>
+    </xs:group>
+
+    <xs:element name="HttpPage">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="condition" type="xs:string" minOccurs="0"/>
+                <xs:element name="id" type="xs:string"/>
+                <xs:element name="needStore" type="xs:boolean" minOccurs="0"/>
+                <xs:element name="redirect" type="xs:boolean" minOccurs="0"/>
+                <xs:element name="image" type="xs:boolean" minOccurs="0"/>
+                <xs:element name="request" type="HttpPageRequest"/>
+                <xs:element name="response" type="xs:string" minOccurs="0"/>
+                <xs:element name="nextPageId" type="xs:string" minOccurs="0"/>
+                <xs:element name="refreshEnabled" type="xs:string" minOccurs="0"/>
+                <xs:element name="refreshFromPageId" type="xs:string" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="HttpPageRequest">
+        <xs:sequence>
+            <xs:element name="url" type="xs:string"/>
+            <xs:element name="method" type="xs:string">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:pattern value="post||get"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="body" type="xs:string" minOccurs="0"/>
+            <xs:element name="charset" type="xs:string"/>
+            <xs:element name="timeout" type="xs:integer"/>
+            <xs:element name="headers" type="map" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <!--map类型-->
+    <xs:complexType name="map">
+        <xs:sequence>
+            <xs:element name="key" type="xs:string"/>
+            <xs:element name="value" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+</xs:schema>

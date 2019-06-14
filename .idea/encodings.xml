@@ -3,6 +3,7 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/consul" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/crawler-analysis" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/spring-consul" charset="UTF-8" />
   </component>
 </project>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<HttpPages
+        xmlns="http://www.w3schools.com"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="crawler.xsd">
+    <HttpPage>
+        <condition>"1=1"</condition>
+        <id>login-page</id>
+        <needStore>true</needStore>
+        <redirect>true</redirect>
+        <image>false</image>
+        <request>
+            <url>https://www.baidu.com/</url>
+            <method>get</method>
+            <charset>utf-8</charset>
+            <timeout>3000</timeout>
+        </request>
+    </HttpPage>
+
+
+</HttpPages>
+
+
+
+
