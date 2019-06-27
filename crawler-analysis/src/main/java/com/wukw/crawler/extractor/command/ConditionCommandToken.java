@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 /**
  * 条件语句
  */
-public class ConditionCommandToken implements CommandToken<Boolean> {
+public class ConditionCommandToken implements CommandToken<String,Boolean> {
 
     private static final Pattern AND_OR = Pattern.compile("([\\s\\S]*?)([&|]{2})");
 
@@ -29,7 +29,7 @@ public class ConditionCommandToken implements CommandToken<Boolean> {
 
     }
 
-    public boolean verifyCondition(String condition) {
+    private boolean verifyCondition(String condition) {
         String[] leftAndRight = condition.split("=");
         String left = leftAndRight[0];
         String right = leftAndRight[1];
