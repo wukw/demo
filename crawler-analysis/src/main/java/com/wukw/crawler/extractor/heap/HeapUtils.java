@@ -1,6 +1,8 @@
 package com.wukw.crawler.extractor.heap;
 
 
+import org.springframework.util.StringUtils;
+
 public class HeapUtils {
     static ContextHeap contextHeap = new ContextHeap();
     static PageHeap pageHeap = new PageHeap();
@@ -32,6 +34,9 @@ public class HeapUtils {
     }
 
     public static String replace(String text) {
+        if (StringUtils.isEmpty(text)) {
+            return null;
+        }
         text = pageHeap.replace(text);
         text = contextHeap.replace(text);
         return text;

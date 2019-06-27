@@ -8,6 +8,7 @@ import java.util.Map;
 public class HttpPageRequest {
     String url;
     private String method;
+    private String mediaType;
     private Map<String, String> headers = new HashMap();
     private String body;
     private String charset;

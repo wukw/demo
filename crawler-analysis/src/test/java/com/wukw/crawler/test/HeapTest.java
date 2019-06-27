@@ -7,7 +7,7 @@ import static org.junit.Assert.assertEquals;
 
 public class HeapTest {
     /**
-     * 测试 存放 符号值替换
+     * 测试 存放 符号值替换`
      */
     @Test
     public void testReplace() {
@@ -23,5 +23,6 @@ public class HeapTest {
         assertEquals(null, HeapUtils.get("#{c}"));
         assertEquals("lbbbb", HeapUtils.replace( "#{p}bbbb"));
         assertEquals("lbbbbl", HeapUtils.replace("#{p}bbbb#{p}"));
+        assertEquals("t", HeapUtils.get("#{c:t}"));
     }
 }
