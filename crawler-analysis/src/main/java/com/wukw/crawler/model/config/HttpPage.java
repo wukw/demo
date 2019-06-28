@@ -13,6 +13,7 @@ public class HttpPage {
     private Boolean redirect = false;
     private Integer maxRedirects;
     private Boolean image = false;
+    private HttpPageFor httpPageFor;
     private HttpPageRequest request;
     private HttpPageResponse response;
     private String nextPageId;

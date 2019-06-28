@@ -13,7 +13,13 @@ import java.util.Map;
 import java.util.Set;
 
 @Slf4j
-public class HttpRequestCommandToken implements CommandToken<HttpPageRequest, HttpPageResponse> {
+public class HttpPageRequestToken implements CommandToken<HttpPageRequest, HttpPageResponse> {
+    public static HttpPageRequestToken httpPageRequestToken = new HttpPageRequestToken();
+
+    private HttpPageRequestToken() {
+    }
+
+
     @Override
     public HttpPageResponse doCommmand(HttpPageRequest pageRequest) {
 

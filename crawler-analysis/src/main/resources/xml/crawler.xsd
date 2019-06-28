@@ -26,6 +26,7 @@
                 <xs:element name="needStore" type="xs:boolean" minOccurs="0"/>
                 <xs:element name="redirect" type="xs:boolean" minOccurs="0"/>
                 <xs:element name="image" type="xs:boolean" minOccurs="0"/>
+                <xs:element name="for" type="PageFor" minOccurs="0"/>
                 <xs:element name="request" type="HttpPageRequest"/>
                 <xs:element name="response" type="xs:string" minOccurs="0"/>
                 <xs:element name="nextPageId" type="xs:string" minOccurs="0"/>
@@ -35,13 +36,20 @@
         </xs:complexType>
     </xs:element>
 
+    <xs:complexType name="PageFor">
+        <xs:attribute name="ketName" type="xs:string"/>
+        <xs:attribute name="start" type="xs:int"/>
+        <xs:attribute name="end"   type="xs:int"/>
+        <xs:attribute name="step"  type="xs:int"/>
+    </xs:complexType>
+
     <xs:complexType name="HttpPageRequest">
         <xs:sequence>
             <xs:element name="url" type="xs:string"/>
             <xs:element name="method" type="xs:string">
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
-                        <xs:pattern value="post||get"/>
+                        <xs:pattern value="POST||GET"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>

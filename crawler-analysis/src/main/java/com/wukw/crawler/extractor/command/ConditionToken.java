@@ -8,8 +8,11 @@ import java.util.regex.Pattern;
 /**
  * 条件语句
  */
-public class ConditionCommandToken implements CommandToken<String,Boolean> {
+public class ConditionToken implements CommandToken<String, Boolean> {
+    public static ConditionToken conditionToken = new ConditionToken();
 
+    private ConditionToken() {
+    }
     private static final Pattern AND_OR = Pattern.compile("([\\s\\S]*?)([&|]{2})");
 
 
