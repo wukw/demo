@@ -7,7 +7,7 @@ import static org.junit.Assert.assertEquals;
 
 public class HeapTest {
     /**
-     * 测试 存放 符号值替换`
+     * 测试 存放 符号值替换
      */
     @Test
     public void testReplace() {

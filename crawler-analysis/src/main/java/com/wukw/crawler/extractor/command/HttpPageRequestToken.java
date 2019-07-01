@@ -1,8 +1,8 @@
 package com.wukw.crawler.extractor.command;
 
 import com.wukw.crawler.extractor.heap.HeapUtils;
+import com.wukw.crawler.model.HttpResponse;
 import com.wukw.crawler.model.config.HttpPageRequest;
-import com.wukw.crawler.model.config.HttpPageResponse;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
 
@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.Set;
 
 @Slf4j
-public class HttpPageRequestToken implements CommandToken<HttpPageRequest, HttpPageResponse> {
+public class HttpPageRequestToken implements CommandToken<HttpPageRequest, HttpResponse> {
     public static HttpPageRequestToken httpPageRequestToken = new HttpPageRequestToken();
 
     private HttpPageRequestToken() {
@@ -21,7 +21,7 @@ public class HttpPageRequestToken implements CommandToken<HttpPageRequest, HttpP
 
 
     @Override
-    public HttpPageResponse doCommmand(HttpPageRequest pageRequest) {
+    public HttpResponse doCommmand(HttpPageRequest pageRequest) {
 
         OkHttpClient okHttpClient = getUnsafeOkHttpClient();
         final Request request = getRequest(pageRequest);
@@ -33,9 +33,9 @@ public class HttpPageRequestToken implements CommandToken<HttpPageRequest, HttpP
         return null;
     }
 
-    private HttpPageResponse getPageResponse(Response response) {
+    private HttpResponse getPageResponse(Response response) {
         try {
-            return HttpPageResponse.builder().body(response.body().string()).headers(response.headers().toMultimap()).build();
+            return HttpResponse.builder().body(response.body().string()).headers(response.headers().toMultimap()).build();
         } catch (IOException e) {
             e.printStackTrace();
         }
