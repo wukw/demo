@@ -3,9 +3,12 @@ package com.wukw.crawler.extractor.heap;
 
 import org.springframework.util.StringUtils;
 
+import java.util.Map;
+
 public class HeapUtils {
     static ContextHeap contextHeap = new ContextHeap();
     static PageHeap pageHeap = new PageHeap();
+    static ThreadLocal<Map<String, Object>> threadLocal = new ThreadLocal<>();
 
 
     /**
@@ -40,5 +43,17 @@ public class HeapUtils {
         text = pageHeap.replace(text);
         text = contextHeap.replace(text);
         return text;
+    }
+
+    public static Object getThread(String name) {
+        return threadLocal.get().get(name);
+    }
+
+    public static Object removeThread(String name) {
+        return threadLocal.get().remove(name);
+    }
+
+    public static Object setThread(String name, String value) {
+        return threadLocal.get().put(name, value);
     }
 }

@@ -78,8 +78,9 @@
                 </xs:simpleType>
             </xs:element>
             <xs:element name="element" type="xs:string" minOccurs="0"/>
+            <xs:element name="var" type="var" minOccurs="0"/>
+            <xs:group ref="stores" minOccurs="0"/>
             <xs:element name="extractors" type="extractors" minOccurs="0"/>
-            <xs:group ref="stores"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -91,8 +92,13 @@
 
     <xs:complexType name="stroe">
         <xs:attribute name="element" type="xs:string"/>
-        <xs:attribute name="object-name" type="xs:string"/>
-        <xs:attribute name="object-field" type="xs:string"/>
+        <xs:attribute name="objectName" type="xs:string"/>
+        <xs:attribute name="objectField" type="xs:string"/>
+    </xs:complexType>
+
+    <xs:complexType name="var">
+        <xs:attribute name="class"/>
+        <xs:attribute name="bean-name"/>
     </xs:complexType>
 
 

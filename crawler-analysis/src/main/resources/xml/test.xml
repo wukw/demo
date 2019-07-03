@@ -20,10 +20,10 @@
                 <type>JSON</type>
                 <element>user</element>
                 <extractors>
-                    <type>JSON</type>
-                    <store element="id" object-name="user" object-field="user"/>
+                   <element>1</element>
+                    <var class="1" bean-name="2"/>
+                    <store element="1" objectName="2" objectField="2"></store>
                 </extractors>
-                <store/>
             </extractors>
         </response>
     </HttpPage>
@@ -44,7 +44,7 @@
                 <type>HTML</type>
                 <element>user</element>
                 <extractors>
-                    <store element="id" object-name="user" object-field="user"/>
+                    <store element="1" objectName="2" objectField="2"></store>
                 </extractors>
                 <store/>
             </extractors>
