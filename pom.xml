@@ -12,6 +12,7 @@
         <module>consul</module>
         <module>spring-consul</module>
         <module>crawler-analysis</module>
+        <module>hadoop</module>
     </modules>
 
 
