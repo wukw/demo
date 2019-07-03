@@ -8,11 +8,13 @@
 
     <xs:element name="HttpPages">
         <xs:complexType>
-            <xs:group ref="HttpPages"></xs:group>
+            <xs:sequence maxOccurs="unbounded">
+                <xs:group ref="HttpPageGroup"></xs:group>
+            </xs:sequence>
         </xs:complexType>
     </xs:element>
 
-    <xs:group name="HttpPages">
+    <xs:group name="HttpPageGroup">
         <xs:sequence>
             <xs:element ref="HttpPage"></xs:element>
         </xs:sequence>
@@ -26,8 +28,9 @@
                 <xs:element name="needStore" type="xs:boolean" minOccurs="0"/>
                 <xs:element name="redirect" type="xs:boolean" minOccurs="0"/>
                 <xs:element name="image" type="xs:boolean" minOccurs="0"/>
+                <xs:element name="for" type="PageFor" minOccurs="0"/>
                 <xs:element name="request" type="HttpPageRequest"/>
-                <xs:element name="response" type="xs:string" minOccurs="0"/>
+                <xs:element name="response" type="HttpPageResponse"/>
                 <xs:element name="nextPageId" type="xs:string" minOccurs="0"/>
                 <xs:element name="refreshEnabled" type="xs:string" minOccurs="0"/>
                 <xs:element name="refreshFromPageId" type="xs:string" minOccurs="0"/>
@@ -35,13 +38,20 @@
         </xs:complexType>
     </xs:element>
 
+    <xs:complexType name="PageFor">
+        <xs:attribute name="ketName" type="xs:string"/>
+        <xs:attribute name="start" type="xs:int"/>
+        <xs:attribute name="end" type="xs:int"/>
+        <xs:attribute name="step" type="xs:int"/>
+    </xs:complexType>
+
     <xs:complexType name="HttpPageRequest">
         <xs:sequence>
             <xs:element name="url" type="xs:string"/>
             <xs:element name="method" type="xs:string">
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
-                        <xs:pattern value="post||get"/>
+                        <xs:pattern value="POST||GET"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
@@ -50,6 +60,45 @@
             <xs:element name="timeout" type="xs:integer"/>
             <xs:element name="headers" type="map" minOccurs="0"/>
         </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="HttpPageResponse">
+        <xs:sequence maxOccurs="unbounded">
+            <xs:element name="extractors" type="extractors"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="extractors">
+        <xs:sequence maxOccurs="unbounded">
+            <xs:element name="type" type="xs:string" minOccurs="0">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:pattern value="JSON||TEXT||HTML"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="element" type="xs:string" minOccurs="0"/>
+            <xs:element name="var" type="var" minOccurs="0"/>
+            <xs:group ref="stores" minOccurs="0"/>
+            <xs:element name="extractors" type="extractors" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:group name="stores">
+        <xs:sequence>
+            <xs:element name="store" type="stroe"/>
+        </xs:sequence>
+    </xs:group>
+
+    <xs:complexType name="stroe">
+        <xs:attribute name="element" type="xs:string"/>
+        <xs:attribute name="objectName" type="xs:string"/>
+        <xs:attribute name="objectField" type="xs:string"/>
+    </xs:complexType>
+
+    <xs:complexType name="var">
+        <xs:attribute name="class"/>
+        <xs:attribute name="bean-name"/>
     </xs:complexType>
 
 

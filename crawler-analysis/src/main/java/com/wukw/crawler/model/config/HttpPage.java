@@ -1,8 +1,10 @@
 package com.wukw.crawler.model.config;
 
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@Data
 public class HttpPage {
     private String condition;
     private String loop;
@@ -11,6 +13,7 @@ public class HttpPage {
     private Boolean redirect = false;
     private Integer maxRedirects;
     private Boolean image = false;
+    private HttpPageFor httpPageFor;
     private HttpPageRequest request;
     private HttpPageResponse response;
     private String nextPageId;

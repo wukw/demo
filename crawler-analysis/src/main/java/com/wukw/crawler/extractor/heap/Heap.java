@@ -6,11 +6,11 @@ public interface Heap {
         return false;
     }
 
-    public static Object get(String k, String defaultV){
+    public static Object get(String k, String defaultV) {
         return null;
     }
 
-    public static boolean clean(String key){
+    public static boolean clean(String key) {
         return false;
     }
 

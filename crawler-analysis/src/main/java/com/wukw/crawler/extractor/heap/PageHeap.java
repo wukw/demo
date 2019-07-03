@@ -5,8 +5,12 @@ import java.util.regex.Pattern;
 
 public class PageHeap extends BaseHeap {
 
-    private PageHeap() {
-        super(new ConcurrentHashMap(), Pattern.compile("#\\{}"));
+    public PageHeap() {
+        super(new ConcurrentHashMap(),
+                Pattern.compile("#\\{.*}"),
+                Pattern.compile(".*#\\{(.*)}.*"),
+                Pattern.compile(".*(#\\{.*}).*")
+                );
     }
 
 }

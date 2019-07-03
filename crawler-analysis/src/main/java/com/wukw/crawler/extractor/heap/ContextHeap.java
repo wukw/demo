@@ -5,7 +5,12 @@ import java.util.regex.Pattern;
 
 public class ContextHeap extends BaseHeap {
 
-    private ContextHeap() {
-        super(new ConcurrentHashMap(), Pattern.compile("$\\{}"));
+    public ContextHeap() {
+        super(
+                new ConcurrentHashMap(),
+                Pattern.compile("\\$\\{.*}"),
+                Pattern.compile(".*\\$\\{(.*)}.*"),
+                Pattern.compile(".*(\\$\\{.*}).*")
+        );
     }
 }

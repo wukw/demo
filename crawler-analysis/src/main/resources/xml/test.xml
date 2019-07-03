@@ -11,12 +11,45 @@
         <image>false</image>
         <request>
             <url>https://www.baidu.com/</url>
-            <method>get</method>
+            <method>GET</method>
             <charset>utf-8</charset>
             <timeout>3000</timeout>
         </request>
+        <response>
+            <extractors>
+                <type>JSON</type>
+                <element>user</element>
+                <extractors>
+                   <element>1</element>
+                    <var class="1" bean-name="2"/>
+                    <store element="1" objectName="2" objectField="2"></store>
+                </extractors>
+            </extractors>
+        </response>
     </HttpPage>
-
+    <HttpPage>
+        <condition>"1=1"</condition>
+        <id>login-page</id>
+        <needStore>true</needStore>
+        <redirect>true</redirect>
+        <image>false</image>
+        <request>
+            <url>https://www.baidu.com/</url>
+            <method>GET</method>
+            <charset>utf-8</charset>
+            <timeout>3000</timeout>
+        </request>
+        <response>
+            <extractors>
+                <type>HTML</type>
+                <element>user</element>
+                <extractors>
+                    <store element="1" objectName="2" objectField="2"></store>
+                </extractors>
+                <store/>
+            </extractors>
+        </response>
+    </HttpPage>
 
 </HttpPages>
 
