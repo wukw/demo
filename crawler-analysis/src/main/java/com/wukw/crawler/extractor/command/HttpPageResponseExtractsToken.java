@@ -1,27 +1,32 @@
 package com.wukw.crawler.extractor.command;
 
-import com.wukw.crawler.extractor.heap.HeapUtils;
+import com.alibaba.fastjson.JSON;
 import com.wukw.crawler.model.HttpResponse;
 import com.wukw.crawler.model.HttpResponseFormatBody;
+import com.wukw.crawler.model.HttpResponseFormatHtml;
+import com.wukw.crawler.model.HttpResponseFormatJson;
 import com.wukw.crawler.model.config.HttpPageResponse;
 import com.wukw.crawler.model.config.HttpPageResponseExtractor;
 import com.wukw.crawler.model.config.HttpPageResponseExtractorsStroe;
+import lombok.AllArgsConstructor;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 import java.util.Map;
 import java.util.Stack;
 
-public class HttpPageResponseExtractsToken implements CommandToken<HttpPageResponse, Map<String, String>>{
+@AllArgsConstructor
+public class HttpPageResponseExtractsToken implements CommandToken<HttpResponse, Map<String, String>> {
+    HttpPageResponse httpPageResponse;
 
     @Override
-    public Map<String, String> doCommmand(HttpPageResponse httpPageResponse) {
-        HttpResponse httpResponse = (HttpResponse) HeapUtils.getThread("HttpResponse");
+    public Map<String, String> doCommmand(HttpResponse httpResponse) {
 
         for (HttpPageResponseExtractor httpPageResponseExtractor : httpPageResponse.getHttpPageResponseExtractors()) {
             Stack<Object> stack = new Stack<>();
-            formatType(httpPageResponseExtractor.getType(),stack,httpResponse.getBody());
-            ElementToken elementToken = new ElementToken(httpPageResponseExtractor.getElement());
-            elementToken.doCommmand(stack);
-            for(HttpPageResponseExtractorsStroe stroe : httpPageResponseExtractor.getStroes()){
+            formatType(httpPageResponseExtractor.getType(), stack);
+            new ElementToken(httpPageResponseExtractor.getElement()).doCommmand(stack);
+            for (HttpPageResponseExtractorsStroe stroe : httpPageResponseExtractor.getStroes()) {
                 new StoreToken(stroe).doCommmand(stack);
             }
         }
@@ -29,21 +34,26 @@ public class HttpPageResponseExtractsToken implements CommandToken<HttpPageRespo
     }
 
     /**
-     *
-     * @param type
-     * @param stack
-     * @param body
+     * @param type   JSON|HTML
+     * @param stack  
      * @return
      */
-    public HttpResponseFormatBody formatType(String type, Stack<Object> stack, String body){
+    public HttpResponseFormatBody formatType(String type, Stack<Object> stack) {
+        Object body = stack.peek();
+        //转 json
         HttpResponseFormatBody formatObject = null;
-        if("JSON".equalsIgnoreCase(type)){
-            //todo json fromat
+        if ("JSON".equalsIgnoreCase(type)) {
+            Map jsonMap = JSON.parseObject(body.toString(), Map.class);
+            formatObject = new HttpResponseFormatJson(jsonMap);
         }
-        if("HTML".equalsIgnoreCase(type)){
-            //todo html fromat
+        //转 html
+        if ("HTML".equalsIgnoreCase(type)) {
+            Document document = Jsoup.parse(body.toString());
+            formatObject = new HttpResponseFormatHtml(document);
         }
-        stack.push(body);
-        return null;
+        if (formatObject != null) {
+            stack.push(formatObject);
+        }
+        return formatObject;
     }
 }

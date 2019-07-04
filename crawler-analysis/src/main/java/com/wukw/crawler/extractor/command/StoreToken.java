@@ -2,6 +2,7 @@ package com.wukw.crawler.extractor.command;
 
 import com.wukw.crawler.extractor.heap.HeapUtils;
 import com.wukw.crawler.model.config.HttpPageResponseExtractorsStroe;
+import com.wukw.crawler.utils.StringUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -17,7 +18,7 @@ public class StoreToken implements CommandToken<Stack<Object>, String> {
     @Override
     public String doCommmand(Stack<Object> stack) {
         String value = new ElementToken(httpPageResponseExtractorsStroe.getElement()).doCommmand(stack);
-        String objectName  = httpPageResponseExtractorsStroe.getObjectName();
+        String objectName = httpPageResponseExtractorsStroe.getObjectName();
         String objectField = httpPageResponseExtractorsStroe.getObjectField();
         Object obj = HeapUtils.get(objectName);
         if (obj == null) {
@@ -25,7 +26,8 @@ public class StoreToken implements CommandToken<Stack<Object>, String> {
         }
         Method method = null;
         try {
-            method = obj.getClass().getMethod("set" + objectField, String.class);
+            //首字母大写 调用set方法
+            method = obj.getClass().getMethod("set" + StringUtils.captureName(objectField), String.class);
         } catch (NoSuchMethodException e) {
             log.info("class:{}无该属性{}get方法", objectName, objectField);
             return null;
