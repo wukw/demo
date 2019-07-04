@@ -1,5 +1,6 @@
 package com.wukw.spring.consul.controller;
 
+import com.wukw.spring.consul.aspect.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,8 @@ public class TestController {
     @Autowired
     RestTemplate restTemplate;
 
+
+    @Role(role = "admin")
     @GetMapping("getPath")
     public String getPath() {
         return path;
