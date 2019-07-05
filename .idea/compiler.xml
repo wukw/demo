@@ -6,20 +6,25 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="consul" />
+        <module name="spring-consul" />
         <module name="crawler-analysis" />
         <module name="crawleranalysis" />
-        <module name="hadoop" />
-        <module name="spring-consul" />
         <module name="springconsul" />
+        <module name="consul" />
+        <module name="hadoop" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="consul" target="1.8" />
       <module name="crawler-analysis" target="1.8" />
-      <module name="demo" target="1.8" />
-      <module name="hadoop" target="1.8" />
       <module name="spring-consul" target="1.8" />
     </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="consul" options="-parameters" />
+      <module name="crawleranalysis" options="-parameters" />
+      <module name="hadoop" options="-parameters" />
+      <module name="springconsul" options="-parameters" />
+    </option>
   </component>
 </project>

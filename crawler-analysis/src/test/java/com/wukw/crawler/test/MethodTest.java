@@ -8,7 +8,7 @@ import java.lang.reflect.Method;
 public class MethodTest {
     @Test
     public void test() {
-       
+
 
     }
 }

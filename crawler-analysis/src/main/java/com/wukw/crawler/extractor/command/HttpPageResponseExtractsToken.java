@@ -35,7 +35,7 @@ public class HttpPageResponseExtractsToken implements CommandToken<HttpResponse,
 
     /**
      * @param type   JSON|HTML
-     * @param stack  
+     * @param stack
      * @return
      */
     public HttpResponseFormatBody formatType(String type, Stack<Object> stack) {
