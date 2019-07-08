@@ -91,6 +91,7 @@
     </xs:group>
 
     <xs:complexType name="stroe">
+        <xs:attribute name="attr" type="xs:string"/>
         <xs:attribute name="element" type="xs:string"/>
         <xs:attribute name="objectName" type="xs:string"/>
         <xs:attribute name="objectField" type="xs:string"/>

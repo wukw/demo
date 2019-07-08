@@ -1,6 +1,7 @@
 package com.wukw.crawler.extractor.command;
 
 import com.wukw.crawler.extractor.heap.HeapUtils;
+import com.wukw.crawler.model.HttpResponseFormatBody;
 import com.wukw.crawler.model.config.HttpPageResponseExtractorsStroe;
 import com.wukw.crawler.utils.StringUtils;
 import lombok.AllArgsConstructor;
@@ -12,12 +13,20 @@ import java.util.Stack;
 
 @AllArgsConstructor
 @Slf4j
-public class StoreToken implements CommandToken<Stack<Object>, String> {
+public class StoreToken implements CommandToken<Stack<Object>, Object> {
     HttpPageResponseExtractorsStroe httpPageResponseExtractorsStroe;
 
     @Override
-    public String doCommmand(Stack<Object> stack) {
-        String value = new ElementToken(httpPageResponseExtractorsStroe.getElement()).doCommmand(stack);
+    public Object doCommmand(Stack<Object> stack) {
+        ElementToken token = new ElementToken(httpPageResponseExtractorsStroe.getElement());
+
+        Object element = null;
+        if (httpPageResponseExtractorsStroe.getElement() != null) {
+            element = token.doCommmand(stack);
+        }
+        if (httpPageResponseExtractorsStroe.getAttr() != null) {
+            element = token.attr(stack);
+        }
         String objectName = httpPageResponseExtractorsStroe.getObjectName();
         String objectField = httpPageResponseExtractorsStroe.getObjectField();
         Object obj = HeapUtils.get(objectName);
@@ -33,13 +42,13 @@ public class StoreToken implements CommandToken<Stack<Object>, String> {
             return null;
         }
         try {
-            method.invoke(obj, value);
+            method.invoke(obj, element.toString());
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (InvocationTargetException e) {
             e.printStackTrace();
         }
-        return value;
+        return element;
 
     }
 }

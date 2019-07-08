@@ -11,6 +11,7 @@ import com.wukw.crawler.model.config.HttpPageResponseExtractorsStroe;
 import lombok.AllArgsConstructor;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 
 import java.util.Map;
 import java.util.Stack;
@@ -24,6 +25,7 @@ public class HttpPageResponseExtractsToken implements CommandToken<HttpResponse,
 
         for (HttpPageResponseExtractor httpPageResponseExtractor : httpPageResponse.getHttpPageResponseExtractors()) {
             Stack<Object> stack = new Stack<>();
+            stack.push(httpResponse.getBody() == null ? "" : httpResponse.getBody());
             formatType(httpPageResponseExtractor.getType(), stack);
             new ElementToken(httpPageResponseExtractor.getElement()).doCommmand(stack);
             for (HttpPageResponseExtractorsStroe stroe : httpPageResponseExtractor.getStroes()) {
@@ -34,7 +36,7 @@ public class HttpPageResponseExtractsToken implements CommandToken<HttpResponse,
     }
 
     /**
-     * @param type   JSON|HTML
+     * @param type  JSON|HTML
      * @param stack
      * @return
      */
@@ -48,7 +50,7 @@ public class HttpPageResponseExtractsToken implements CommandToken<HttpResponse,
         }
         //转 html
         if ("HTML".equalsIgnoreCase(type)) {
-            Document document = Jsoup.parse(body.toString());
+            Elements document = Jsoup.parse(body.toString()).children();
             formatObject = new HttpResponseFormatHtml(document);
         }
         if (formatObject != null) {

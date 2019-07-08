@@ -1,19 +1,24 @@
 package com.wukw.crawler.model;
 
 import lombok.AllArgsConstructor;
-import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 
 @AllArgsConstructor
 public class HttpResponseFormatHtml extends HttpResponseFormatBody {
-    Document document;
+    Elements documents;
 
     @Override
-    public String element(String element) {
-        return document.body().select(element).first().text();
+    public Elements element(String element) {
+        return documents.select(element);
     }
 
     @Override
     public String attr(String attr) {
-        return document.body().attr(attr);
+        return documents.attr(attr);
+    }
+
+    @Override
+    public String toString() {
+        return documents.text();
     }
 }
