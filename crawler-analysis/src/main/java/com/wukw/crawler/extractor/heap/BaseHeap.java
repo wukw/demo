@@ -4,7 +4,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class BaseHeap {
+public class BaseHeap implements HeapInterface {
     ThreadLocal<ConcurrentHashMap> heap;
     Pattern pattern;
     Pattern namePattern;
@@ -37,8 +37,8 @@ public class BaseHeap {
         return text;
     }
 
-    private String getKeyName(String k) {
-        Matcher matcher = namePattern.matcher(k);
+    private String getKeyName(String text) {
+        Matcher matcher = namePattern.matcher(text);
         if (matcher.find()) {
             return matcher.group(1);
         } else {
@@ -58,7 +58,7 @@ public class BaseHeap {
         return getByName(keyName, defaultV);
     }
 
-    public Object getByName(String name, String defaultV) {
+    private Object getByName(String name, String defaultV) {
         return heap.get().getOrDefault(name, defaultV);
     }
 
@@ -76,11 +76,14 @@ public class BaseHeap {
 
     }
 
-    public void init() {
+    @Override
+    public void threadInit() {
         heap.set(new ConcurrentHashMap());
+
     }
 
-    public void destroy() {
+    @Override
+    public void threadDestroy() {
         heap.remove();
     }
 }

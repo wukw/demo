@@ -4,15 +4,13 @@ package com.wukw.crawler.extractor.heap;
 import org.springframework.util.StringUtils;
 
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class HeapUtils {
     public static final String taskId = "taskId";
 
     static ContextHeap contextHeap = new ContextHeap();
     static PageHeap pageHeap = new PageHeap();
-    static ThreadLocal<Map<String, Object>> params = new ThreadLocal<>();
-    static ThreadLocal<ConcurrentHashMap> objectMap = new ThreadLocal<ConcurrentHashMap>();
+    static ThreadLocal<Map<String, Object>> params = new ThreadLocal();
 
 
     /**
@@ -40,6 +38,12 @@ public class HeapUtils {
         return false;
     }
 
+    /**
+     * 会将text 中所有 ${name} || #{name} 替换成 相对应的的值
+     *
+     * @param text
+     * @return
+     */
     public static String replace(String text) {
         if (StringUtils.isEmpty(text)) {
             return null;
@@ -61,26 +65,28 @@ public class HeapUtils {
         return params.get().put(name, value);
     }
 
-    public static void saveObj(String name, Object obj) {
-        objectMap.get().put(name, obj);
+    public static void saveObj(String name, String aliasName, Object obj, int limit) {
+        ObjectHeap.getInstance().addObject(name, aliasName, obj, limit);
     }
 
-    public static Object getObj(String name) {
+    public static Object getObj(String name, String aliasName, int index) {
         name = replace(name);
-        return objectMap.get().get(name);
+        return ObjectHeap.getInstance().getObject(name, aliasName, index);
     }
 
     public static void init() {
-        contextHeap.init();
-        pageHeap.init();
-        objectMap.set(new ConcurrentHashMap());
+        contextHeap.threadInit();
+        pageHeap.threadInit();
+        ObjectHeap.getInstance().threadInit();
+        //实体类路径
+        params.get().put("modelPath", System.getenv("modelPath"));
 
 
     }
 
     public static void destroy() {
-        contextHeap.destroy();
-        pageHeap.destroy();
-        objectMap.remove();
+        contextHeap.threadDestroy();
+        pageHeap.threadDestroy();
+        ObjectHeap.getInstance().threadDestroy();
     }
 }
