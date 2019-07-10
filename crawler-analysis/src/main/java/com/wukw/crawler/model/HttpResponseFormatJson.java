@@ -16,4 +16,14 @@ public class HttpResponseFormatJson extends HttpResponseFormatBody {
     public String attr(String attr) {
         return null;
     }
+
+    @Override
+    public int size() {
+        return 0;
+    }
+
+    @Override
+    public HttpResponseFormatBody getIndex(int index) {
+        return null;
+    }
 }

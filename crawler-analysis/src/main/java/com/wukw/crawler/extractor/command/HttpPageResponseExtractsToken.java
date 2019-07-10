@@ -26,10 +26,17 @@ public class HttpPageResponseExtractsToken implements CommandToken<HttpResponse,
         for (HttpPageResponseExtractor httpPageResponseExtractor : httpPageResponse.getHttpPageResponseExtractors()) {
             Stack<Object> stack = new Stack<>();
             stack.push(httpResponse.getBody() == null ? "" : httpResponse.getBody());
+            //格式化 返回值
             formatType(httpPageResponseExtractor.getType(), stack);
-            new ElementToken(httpPageResponseExtractor.getElement()).doCommmand(stack);
-            for (HttpPageResponseExtractorsStroe stroe : httpPageResponseExtractor.getStroes()) {
-                new StoreToken(stroe).doCommmand(stack);
+            //获取元素
+            HttpResponseFormatBody body = new ElementToken(httpPageResponseExtractor.getElement()).doCommmand(stack);
+            for (int i = 0; i < body.size(); i++) {
+                new VarToken(httpPageResponseExtractor.getVar()).doCommmand(String.valueOf(i));
+                stack.push(body.getIndex(i));
+                for (HttpPageResponseExtractorsStroe stroe : httpPageResponseExtractor.getStroes()) {
+                    new StoreToken(stroe).doCommmand(stack);
+                }
+                stack.pop();
             }
         }
         return null;

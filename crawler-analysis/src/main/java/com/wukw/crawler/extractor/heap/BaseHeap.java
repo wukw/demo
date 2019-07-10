@@ -5,12 +5,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class BaseHeap {
-    ConcurrentHashMap<String, Object> heap;
+    ThreadLocal<ConcurrentHashMap> heap;
     Pattern pattern;
     Pattern namePattern;
     Pattern relacePattern;
 
-    public BaseHeap(ConcurrentHashMap concurrentHashMap, Pattern p, Pattern n,Pattern r) {
+    public BaseHeap(ThreadLocal<ConcurrentHashMap> concurrentHashMap, Pattern p, Pattern n, Pattern r) {
         heap = concurrentHashMap;
         pattern = p;
         namePattern = n;
@@ -22,14 +22,17 @@ public class BaseHeap {
             return false;
         }
         String keyName = getKeyName(k);
-        heap.put(keyName, v);
+        heap.get().put(keyName, v);
         return true;
     }
 
     public String replace(String text) {
         for (Matcher matcher = relacePattern.matcher(text); matcher.find(); ) {
             String name = matcher.group(1);
-            text = text.replace(name,get(name).toString());
+            Object heapValue = null;
+            if ((heapValue = get(name)) != null) {
+                text = text.replace(name, heapValue.toString());
+            }
         }
         return text;
     }
@@ -56,7 +59,7 @@ public class BaseHeap {
     }
 
     public Object getByName(String name, String defaultV) {
-        return heap.getOrDefault(name, defaultV);
+        return heap.get().getOrDefault(name, defaultV);
     }
 
 
@@ -64,12 +67,20 @@ public class BaseHeap {
         if (!regex(k)) {
             return false;
         }
-        heap.remove(k);
+        heap.get().remove(k);
         return true;
     }
 
     private boolean regex(String k) {
         return pattern.matcher(k).matches();
 
+    }
+
+    public void init() {
+        heap.set(new ConcurrentHashMap());
+    }
+
+    public void destroy() {
+        heap.remove();
     }
 }

@@ -98,8 +98,8 @@
     </xs:complexType>
 
     <xs:complexType name="var">
-        <xs:attribute name="class"/>
-        <xs:attribute name="bean-name"/>
+        <xs:attribute name="clazz"/>
+        <xs:attribute name="beanName"/>
     </xs:complexType>
 
 

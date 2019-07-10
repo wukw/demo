@@ -18,7 +18,19 @@ public class HttpResponseFormatHtml extends HttpResponseFormatBody {
     }
 
     @Override
+    public int size() {
+        return documents.size();
+    }
+
+    @Override
+    public HttpResponseFormatBody getIndex(int index) {
+        return new HttpResponseFormatHtml(documents.eq(index));
+    }
+
+    @Override
     public String toString() {
         return documents.text();
     }
+
+
 }

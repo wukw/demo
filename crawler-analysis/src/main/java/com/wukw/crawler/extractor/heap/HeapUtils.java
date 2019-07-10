@@ -4,11 +4,15 @@ package com.wukw.crawler.extractor.heap;
 import org.springframework.util.StringUtils;
 
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class HeapUtils {
+    public static final String taskId = "taskId";
+
     static ContextHeap contextHeap = new ContextHeap();
     static PageHeap pageHeap = new PageHeap();
-    static ThreadLocal<Map<String, Object>> threadLocal = new ThreadLocal<>();
+    static ThreadLocal<Map<String, Object>> params = new ThreadLocal<>();
+    static ThreadLocal<ConcurrentHashMap> objectMap = new ThreadLocal<ConcurrentHashMap>();
 
 
     /**
@@ -23,7 +27,7 @@ public class HeapUtils {
         if (name.contains("#")) {
             return pageHeap.get(name);
         }
-        return null;
+        return name;
     }
 
     public static Object put(String k, Object v) {
@@ -46,14 +50,37 @@ public class HeapUtils {
     }
 
     public static Object getThread(String name) {
-        return threadLocal.get().get(name);
+        return params.get().get(name);
     }
 
     public static Object removeThread(String name) {
-        return threadLocal.get().remove(name);
+        return params.get().remove(name);
     }
 
     public static Object setThread(String name, String value) {
-        return threadLocal.get().put(name, value);
+        return params.get().put(name, value);
+    }
+
+    public static void saveObj(String name, Object obj) {
+        objectMap.get().put(name, obj);
+    }
+
+    public static Object getObj(String name) {
+        name = replace(name);
+        return objectMap.get().get(name);
+    }
+
+    public static void init() {
+        contextHeap.init();
+        pageHeap.init();
+        objectMap.set(new ConcurrentHashMap());
+
+
+    }
+
+    public static void destroy() {
+        contextHeap.destroy();
+        pageHeap.destroy();
+        objectMap.remove();
     }
 }

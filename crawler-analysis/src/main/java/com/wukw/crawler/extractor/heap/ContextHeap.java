@@ -7,7 +7,7 @@ public class ContextHeap extends BaseHeap {
 
     public ContextHeap() {
         super(
-                new ConcurrentHashMap(),
+                new ThreadLocal<ConcurrentHashMap>(),
                 Pattern.compile("\\$\\{.*}"),
                 Pattern.compile(".*\\$\\{(.*)}.*"),
                 Pattern.compile(".*(\\$\\{.*}).*")

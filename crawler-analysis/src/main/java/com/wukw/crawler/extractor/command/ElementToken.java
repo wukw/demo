@@ -18,6 +18,7 @@ public class ElementToken implements CommandToken<Stack<Object>, Object> {
             HttpResponseFormatBody body = (HttpResponseFormatBody) stack.peek();
             Object e = body.element(element);
             HttpResponseFormatBody httpResponseFormatBody = new HttpResponseFormatHtml((Elements) e);
+            stack.push(httpResponseFormatBody);
             return httpResponseFormatBody;
         } else {
             return null;

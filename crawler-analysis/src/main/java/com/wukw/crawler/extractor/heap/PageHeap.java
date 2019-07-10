@@ -6,11 +6,11 @@ import java.util.regex.Pattern;
 public class PageHeap extends BaseHeap {
 
     public PageHeap() {
-        super(new ConcurrentHashMap(),
+        super(new ThreadLocal<ConcurrentHashMap>(),
                 Pattern.compile("#\\{.*}"),
                 Pattern.compile(".*#\\{(.*)}.*"),
                 Pattern.compile(".*(#\\{.*}).*")
-                );
+        );
     }
 
 }

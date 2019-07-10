@@ -11,6 +11,7 @@ public class HeapTest {
      */
     @Test
     public void testReplace() {
+        HeapUtils.init();
         //context测试
         HeapUtils.put("${a}", "a");
         assertEquals("a", HeapUtils.get("${a}"));

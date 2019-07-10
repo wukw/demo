@@ -1,7 +1,6 @@
 package com.wukw.crawler.extractor.command;
 
 import com.wukw.crawler.extractor.heap.HeapUtils;
-import com.wukw.crawler.model.HttpResponseFormatBody;
 import com.wukw.crawler.model.config.HttpPageResponseExtractorsStroe;
 import com.wukw.crawler.utils.StringUtils;
 import lombok.AllArgsConstructor;
@@ -29,7 +28,7 @@ public class StoreToken implements CommandToken<Stack<Object>, Object> {
         }
         String objectName = httpPageResponseExtractorsStroe.getObjectName();
         String objectField = httpPageResponseExtractorsStroe.getObjectField();
-        Object obj = HeapUtils.get(objectName);
+        Object obj = HeapUtils.getObj(objectName);
         if (obj == null) {
             return null;
         }

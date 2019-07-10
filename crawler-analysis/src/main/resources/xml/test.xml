@@ -21,12 +21,13 @@
                 <element>user</element>
                 <extractors>
                    <element>1</element>
-                    <var class="1" bean-name="2"/>
+                    <var clazz="1" beanName="2"/>
                     <store element="1" objectName="2" objectField="2"></store>
                 </extractors>
             </extractors>
         </response>
     </HttpPage>
+
     <HttpPage>
         <condition>"1=1"</condition>
         <id>login-page</id>
@@ -44,7 +45,7 @@
                 <type>HTML</type>
                 <element>user</element>
                 <extractors>
-                    <store element="1" objectName="2" objectField="2"></store>
+                    <store attr="1" element="1" objectName="2" objectField="2"></store>
                 </extractors>
                 <store/>
             </extractors>
