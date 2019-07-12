@@ -1,14 +1,14 @@
 package com.wukw.crawler.extractor.config;
 
-import com.wukw.crawler.model.config.HttpPageConfig;
-
-
+/**
+ * 获取解析文件接口
+ */
 public interface ConfigResource {
 
 
     public String getConfig(String ConfigPath);
 
-    public HttpPageConfig getHttpPageConfig(String ConfigInfo);
+
 
 
 }

@@ -2,22 +2,24 @@ package com.wukw.crawler.extractor;
 
 import com.wukw.crawler.extractor.command.ConditionToken;
 import com.wukw.crawler.extractor.command.HttpPageRequestToken;
-import com.wukw.crawler.extractor.config.BaseConfigResource;
+import com.wukw.crawler.extractor.config.DefaultConfigResource;
+import com.wukw.crawler.extractor.config.FormatConfigInterface;
 import com.wukw.crawler.model.config.HttpPage;
 import com.wukw.crawler.model.config.HttpPageConfig;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class Extractor {
-    private BaseConfigResource baseConfigResource;
+    private DefaultConfigResource configResource;
+    private FormatConfigInterface formatConfigInterface;
     //条件指令
     private ConditionToken conditionCommandToken;
     //HttpRequest请求指令
     private HttpPageRequestToken httpRequestCommandToken;
 
     public void exe(String configPath) {
-        String configInfo = baseConfigResource.getConfig(configPath);
-        HttpPageConfig httpPageConfig = baseConfigResource.getHttpPageConfig(configInfo);
+        String configInfo = configResource.getConfig(configPath);
+        HttpPageConfig httpPageConfig = formatConfigInterface.getHttpPageConfig(configInfo);
     }
 
     public void exeHttpPages(HttpPageConfig httpPageConfig) {

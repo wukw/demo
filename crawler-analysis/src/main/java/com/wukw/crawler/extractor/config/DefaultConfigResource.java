@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 @Slf4j
-public abstract class BaseConfigResource implements ConfigResource {
+public class DefaultConfigResource implements ConfigResource {
 
     /**
      * 默认实现 从resources 获取文件
