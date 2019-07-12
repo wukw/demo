@@ -24,13 +24,15 @@ public class ExtractTest {
 
         List<HttpPageResponseExtractorsStroe> httpPageResponseExtractorsStroeList = new ArrayList();
         httpPageResponseExtractorsStroeList.add(httpPageResponseExtractorsStroe);
-        httpPageResponseExtractorsStroe.setElement("tr");
+        httpPageResponseExtractorsStroe.setElement("td:eq(0)");
         httpPageResponseExtractorsStroe.setObjectField("a");
-        httpPageResponseExtractorsStroe.setObjectName("model0");
+        httpPageResponseExtractorsStroe.setIndex(-1);
+        httpPageResponseExtractorsStroe.setObjectName("com.wukw.crawler.model.TestModel");
+
 
         HttpPageResponseExtractor httpPageResponseExtractor = new HttpPageResponseExtractor();
         httpPageResponseExtractor.setStroes(httpPageResponseExtractorsStroeList);
-        httpPageResponseExtractor.setElement("table");
+        httpPageResponseExtractor.setElement("table tr");
         httpPageResponseExtractor.setType("HTML");
         httpPageResponseExtractor.setStroes(httpPageResponseExtractorsStroeList);
         List<HttpPageResponseExtractor> httpPageResponseExtractorList = new ArrayList<>();
@@ -38,20 +40,29 @@ public class ExtractTest {
 
         HttpPageVar var = new HttpPageVar();
         var.setClazz("com.wukw.crawler.model.TestModel");
-        var.setBeanName("model");
         httpPageResponseExtractor.setVar(var);
 
         HttpPageResponse httpPageResponse = new HttpPageResponse();
         httpPageResponse.setHttpPageResponseExtractors(httpPageResponseExtractorList);
 
-        HttpResponse httpResponse = HttpResponse.builder().body("<table><tr><td>user</td><td>cc</td></tr><tr><td>pass</td><td>123</td></tr></table>").build();
+        HttpResponse httpResponse = HttpResponse.builder().body(
+                "<table>" +
+                    "<tr>" +
+                        "<td>user</td>" +
+                        "<td>cc</td>" +
+                    "</tr>" +
+                    "<tr>" +
+                        "<td>pass</td>" +
+                        "<td>123</td>" +
+                    "</tr>" +
+                "</table>").build();
 
-        //------------------测试用例
+
 
         HttpPageResponseToken httpPageResponseToken = new HttpPageResponseToken();
         HttpPageResponseExtractsToken httpPageResponseExtractsToken = new HttpPageResponseExtractsToken(httpPageResponse);
         httpPageResponseExtractsToken.doCommmand(httpResponse);
-        assertEquals("user cc pass 123", ((TestModel) HeapUtils.getObj("model0")).getA());
+        assertEquals("user", ((TestModel) HeapUtils.getObj("com.wukw.crawler.model.TestModel","",0)).getA());
 
 
     }

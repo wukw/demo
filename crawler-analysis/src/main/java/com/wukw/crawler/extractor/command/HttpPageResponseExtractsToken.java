@@ -1,6 +1,7 @@
 package com.wukw.crawler.extractor.command;
 
 import com.alibaba.fastjson.JSON;
+import com.wukw.crawler.extractor.heap.HeapUtils;
 import com.wukw.crawler.model.HttpResponse;
 import com.wukw.crawler.model.HttpResponseFormatBody;
 import com.wukw.crawler.model.HttpResponseFormatHtml;
@@ -12,6 +13,7 @@ import lombok.AllArgsConstructor;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
+import org.springframework.util.ObjectUtils;
 
 import java.util.Map;
 import java.util.Stack;
@@ -31,10 +33,14 @@ public class HttpPageResponseExtractsToken implements CommandToken<HttpResponse,
             //获取元素
             HttpResponseFormatBody body = new ElementToken(httpPageResponseExtractor.getElement()).doCommmand(stack);
             for (int i = 0; i < body.size(); i++) {
-                new VarToken(httpPageResponseExtractor.getVar()).doCommmand(String.valueOf(i));
+                new VarToken(httpPageResponseExtractor.getVar()).doCommmand(i);
                 stack.push(body.getIndex(i));
                 for (HttpPageResponseExtractorsStroe stroe : httpPageResponseExtractor.getStroes()) {
-                    new StoreToken(stroe).doCommmand(stack);
+                    HttpPageResponseExtractorsStroe newStroe = stroe.clone();
+                    if (newStroe.getIndex().equals(-1)) {
+                        newStroe.setIndex(HeapUtils.getObjCount(stroe.getObjectName(), stroe.getObjectAlias()) - 1);
+                    }
+                    new StoreToken(newStroe).doCommmand(stack);
                 }
                 stack.pop();
             }

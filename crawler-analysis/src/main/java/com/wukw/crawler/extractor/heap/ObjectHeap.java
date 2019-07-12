@@ -55,7 +55,7 @@ public class ObjectHeap implements HeapInterface {
         Integer oc = objectCount.get().getOrDefault(name + aliasName, new AtomicInteger(0)).intValue();
         objectPool.get().put(new NameCountKey(name, aliasName, oc + limit), obj);
         //数量加一
-        objectCount.get().put(name + aliasName, new AtomicInteger(objectCount.get().getOrDefault(name, new AtomicInteger(0)).incrementAndGet()));
+        objectCount.get().put(name + aliasName, new AtomicInteger(oc + 1));
     }
 
     /**
@@ -65,7 +65,14 @@ public class ObjectHeap implements HeapInterface {
      * @return
      */
     public Object getObject(String name, String aliasName, int index) {
-        return objectPool.get().get(new NameCountKey(name, aliasName, index));
+        ConcurrentHashMap concurrentHashMap = objectPool.get();
+        return concurrentHashMap.get(new NameCountKey(name, aliasName, index));
+    }
+
+    public int getObjCount(String name, String aliasName) {
+        ConcurrentHashMap<String, AtomicInteger> concurrentHashMap = objectCount.get();
+        return concurrentHashMap.get(name + aliasName).intValue();
+
     }
 
 

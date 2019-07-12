@@ -1,10 +1,12 @@
 package com.wukw.crawler.extractor.heap;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
 
 import java.util.Map;
 
+@Slf4j
 public class HeapUtils {
     public static final String taskId = "taskId";
 
@@ -66,12 +68,18 @@ public class HeapUtils {
     }
 
     public static void saveObj(String name, String aliasName, Object obj, int limit) {
+        log.debug("保存对象:{}别名:{}limit:{}", name, aliasName, limit);
         ObjectHeap.getInstance().addObject(name, aliasName, obj, limit);
     }
 
     public static Object getObj(String name, String aliasName, int index) {
         name = replace(name);
+        log.debug("获取对象:{}别名:{}limit:{}", name, aliasName, index);
         return ObjectHeap.getInstance().getObject(name, aliasName, index);
+    }
+
+    public static Integer getObjCount(String name, String alias) {
+        return ObjectHeap.getInstance().getObjCount(name, alias);
     }
 
     public static void init() {
@@ -79,7 +87,7 @@ public class HeapUtils {
         pageHeap.threadInit();
         ObjectHeap.getInstance().threadInit();
         //实体类路径
-        params.get().put("modelPath", System.getenv("modelPath"));
+        //params.get().put("modelPath", System.getenv("modelPath"));
 
 
     }

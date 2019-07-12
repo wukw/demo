@@ -28,7 +28,7 @@ public class StoreToken implements CommandToken<Stack<Object>, Object> {
         }
         String objectName = httpPageResponseExtractorsStroe.getObjectName();
         String objectField = httpPageResponseExtractorsStroe.getObjectField();
-        Object obj = HeapUtils.getObj(objectName);
+        Object obj = HeapUtils.getObj(objectName, httpPageResponseExtractorsStroe.getObjectAlias(), httpPageResponseExtractorsStroe.getIndex());
         if (obj == null) {
             return null;
         }
@@ -37,7 +37,7 @@ public class StoreToken implements CommandToken<Stack<Object>, Object> {
             //首字母大写 调用set方法
             method = obj.getClass().getMethod("set" + StringUtils.captureName(objectField), String.class);
         } catch (NoSuchMethodException e) {
-            log.info("class:{}无该属性{}get方法", objectName, objectField);
+            log.info("class:{}无该属性{}get|set方法", objectName, objectField);
             return null;
         }
         try {
