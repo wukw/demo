@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="spring-consul" />
         <module name="crawler-analysis" />
+        <module name="springgateway" />
         <module name="crawleranalysis" />
         <module name="springconsul" />
         <module name="consul" />
@@ -26,6 +27,7 @@
       <module name="crawleranalysis" options="-parameters" />
       <module name="hadoop" options="-parameters" />
       <module name="springconsul" options="-parameters" />
+      <module name="springgateway" options="-parameters" />
     </option>
   </component>
 </project>

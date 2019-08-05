@@ -16,7 +16,7 @@ import java.util.List;
 
 @Service
 public class ConsulService implements InitializingBean {
-    HostAndPort hostAndPort = HostAndPort.fromParts("127.0.0.1", 8500);
+    HostAndPort hostAndPort = HostAndPort.fromParts("127.0.0.1", 8501);
     Consul consul = Consul.builder().withHostAndPort(hostAndPort).build();
     AgentClient agentClient = consul.agentClient();
 
