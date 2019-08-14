@@ -13,6 +13,7 @@ public class routeConfig {
         return builder.routes()
                 .route(r -> r.path("/consul-web-client/**")
                         .filters(f -> f.stripPrefix(1))
+                        //从注册中心 寻找地址
                         .uri("lb://consul-web-client")
                         .order(0)
                         .id("consul-web-client")

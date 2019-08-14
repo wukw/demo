@@ -7,11 +7,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="spring-consul" />
+        <module name="crawleranalysis" />
         <module name="crawler-analysis" />
         <module name="springgateway" />
-        <module name="crawleranalysis" />
         <module name="springconsul" />
+        <module name="spring-consul" />
         <module name="consul" />
         <module name="hadoop" />
       </profile>
