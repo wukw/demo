@@ -8,6 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletResponse;
+import java.util.concurrent.atomic.AtomicInteger;
+
 @RestController
 @RequestMapping("test")
 public class TestController {
@@ -17,10 +21,18 @@ public class TestController {
     @Autowired
     RestTemplate restTemplate;
 
+    AtomicInteger atomicInteger = new AtomicInteger(0);
+
 
     @Role(role = "admin")
     @GetMapping("getPath")
-    public String getPath() {
+    public String getPath(HttpServletResponse response) {
+        System.out.println("getPath");
+        atomicInteger.incrementAndGet();
+        if (atomicInteger.get() % 2 == 1) {
+            response.setStatus(500);
+
+        }
         return path;
     }
 

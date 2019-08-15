@@ -17,7 +17,9 @@ public class BaseFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        System.out.println("有请求进入" + servletRequest.getRemoteAddr()+((HttpServletRequest)servletRequest).getServletPath());
+        System.out.println("有请求进入" + servletRequest.getRemoteAddr() + ((HttpServletRequest) servletRequest).getServletPath());
+        String token = ((HttpServletRequest) servletRequest).getHeader("token");
+        System.out.println("token:" + token);
         HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
         filterChain.doFilter(servletRequest, servletResponse);
     }

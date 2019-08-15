@@ -14,6 +14,11 @@ import java.util.concurrent.ThreadPoolExecutor;
 @Slf4j
 @Data
 public class FrameWork {
+
+    public static void main(String[] args) {
+
+    }
+
     private FormatConfigInterface formatConfigInterface;
     private ConfigResource configResource;
     private ThreadPoolExecutor executor;
